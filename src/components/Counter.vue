@@ -1,5 +1,5 @@
 <template>
-  <div v-for="{state, increment} in states" :key="state.name">
+  <div v-for="{state, increment} in states">
     <button @click="increment(1)">+1</button>
     {{ state.name }}
     <button @click="increment(-1)">-1</button>
@@ -13,7 +13,7 @@ import {CounterModel} from "../types/counter";
 const CountEffect = (defaultValue: number = 0) => {
   const state = reactive<CounterModel>({
     value: defaultValue,
-    name: computed(() => state.name = `counter: ${state.value}`)
+    name: computed(() => `counter: ${state.value}`)
   })
   const increment = (payload: number = 1) => {
     state.value += payload
