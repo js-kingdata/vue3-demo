@@ -14,7 +14,7 @@
 </template>
 
 <script lang="ts">
-import CountEffect from "../compoables/counter";
+import CountEffect from "./CounterF/counter";
 
 export default {
   name: "Counter",

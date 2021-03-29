@@ -1,5 +1,5 @@
 import {reactive, computed} from "vue";
-import {CounterModel} from "../types/counter";
+import {CounterModel} from "../../types/counter";
 
 const CountEffect = (defaultValue: number = 0) => {
     const state: CounterModel = reactive<CounterModel>({
