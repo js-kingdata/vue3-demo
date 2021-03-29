@@ -1,5 +1,5 @@
 import {createRouter, createWebHistory} from "vue-router";
-import Home from "../views/Home.vue";
+import Home from "@views/Home.vue";
 
 const routes = [
     {
@@ -10,12 +10,12 @@ const routes = [
     {
         path: '/home',
         name: 'Home',
-        component: () => import('../views/Home.vue'),
+        component: () => import('@views/Home.vue'),
     },
     {
         path: '/about',
         name: 'About',
-        component: () => import('../views/About.vue') // @/views设置的别名
+        component: () => import('@views/About.vue') // @/views设置的别名
     },
 ]
 

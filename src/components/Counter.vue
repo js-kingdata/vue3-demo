@@ -1,33 +1,30 @@
 <template>
   <div class="counter">
     <button @click="increment(1)">+1</button>
-    {{ name }} : {{ value }}
-    <button @click="decrement()">-1</button>
+    {{ state.name }}
+    <button @click="increment(-1)">-1</button>
   </div>
 
 </template>
 
 <script lang="ts">
-import {defineComponent, ref, reactive, toRefs} from "vue";
+import {reactive, computed} from "vue";
 import {CounterModel} from "../types/counter";
 
+const CountEffect = () => {
+  const state = reactive<CounterModel>({value: 111, name: computed(() => state.name = `counter: ${state.value}`)})
+  const increment = (payload: number = 1) => {
+    state.value += payload
+  }
+  return {state, increment}
+}
 
-export default defineComponent({
+export default {
   name: "Counter",
   setup: () => {
-    const useFeatures = () => {
-      const state = reactive<CounterModel>({value: 111, name: 'counter1111'})
-      return toRefs(state)
-    }
-    const {value, name} = useFeatures()
-    const increment = (payload: number = 1) => {
-      value.value += payload
-    }
-    const decrement = (payload: number = 2) => {
-      value.value -= payload
-    }
-    return {name, value, increment, decrement}
+    const {state, increment} = CountEffect()
+    return {state, increment}
   }
-})
+}
 
 </script>

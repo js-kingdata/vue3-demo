@@ -4,15 +4,12 @@
 </template>
 
 <script lang="ts">
-import Counter from "../components/Counter.vue";
+import Counter from "@components/Counter.vue";
 
 
-import {defineComponent} from "vue";
-
-export default defineComponent({
-  name: 'Home',
+export default {
   components: {
     Counter
   }
-})
+}
 </script>
