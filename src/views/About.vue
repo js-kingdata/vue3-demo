@@ -9,7 +9,8 @@ import {inject} from "vue";
 
 export default {
   setup() {
-    const {user, Logout} = inject('user')
+    const {user, Logout, checkLogin} = inject('user')
+    console.log(checkLogin())
     return {
       user, Logout
     }
