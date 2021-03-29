@@ -1,25 +1,20 @@
 <template>
-  <div v-for="{state, increment} in states">
-    <button @click="increment(1)">+1</button>
-    {{ state.name }}
-    <button @click="increment(-1)">-1</button>
-  </div>
+  <Suspense>
+    <template #default>
+      <div v-for="{state, increment} in states">
+        <button @click="increment(1)">+1</button>
+        {{ state.name }}
+        <button @click="increment(-1)">-1</button>
+      </div>
+    </template>
+    <template #fallback>
+      <div class="loading">loading</div>
+    </template>
+  </Suspense>
 </template>
 
 <script lang="ts">
-import {reactive, computed, toRef} from "vue";
-import {CounterModel} from "../types/counter";
-
-const CountEffect = (defaultValue: number = 0) => {
-  const state = reactive<CounterModel>({
-    value: defaultValue,
-    name: computed(() => `counter: ${state.value}`)
-  })
-  const increment = (payload: number = 1) => {
-    state.value += payload
-  }
-  return {state, increment}
-}
+import CountEffect from "../compoables/counter";
 
 export default {
   name: "Counter",

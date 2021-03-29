@@ -1,4 +1,6 @@
+import {reactive, computed, ComputedRef} from "vue";
+
 export interface CounterModel {
     value: number,
-    name: string,
+    name: ComputedRef<string> | string,
 }
