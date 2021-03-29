@@ -1,7 +1,7 @@
 <template>
   <div class="counter">
     <button @click="increment(1)">+1</button>
-    {{ count }}
+    {{ count.value }}
     <button @click="decrement()">-1</button>
   </div>
 
@@ -9,11 +9,13 @@
 
 <script lang="ts">
 import {defineComponent, ref} from "vue";
+import {CounterModel} from "../types/counter";
+
 
 export default defineComponent({
   name: "Counter",
   setup: () => {
-    const count = ref(0)
+    const count = ref<CounterModel>({value: 111, name: 'counter1'})
     const increment = (payload: number = 1) => {
       count.value += payload
     }
