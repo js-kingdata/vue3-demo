@@ -1,18 +1,18 @@
 <template>
-  <div class="counter">
-    <button @click="increment(1)">+1</button>
-    {{ state.name }}
-    <button @click="increment(-1)">-1</button>
-  </div>
-
+  <button @click="increment(1)">+1</button>
+  {{ state.name }}
+  <button @click="increment(-1)">-1</button>
 </template>
 
 <script lang="ts">
 import {reactive, computed} from "vue";
 import {CounterModel} from "../types/counter";
 
-const CountEffect = () => {
-  const state = reactive<CounterModel>({value: 111, name: computed(() => state.name = `counter: ${state.value}`)})
+const CountEffect = (defaultValue: number = 0) => {
+  const state = reactive<CounterModel>({
+    value: defaultValue,
+    name: computed(() => state.name = `counter: ${state.value}`)
+  })
   const increment = (payload: number = 1) => {
     state.value += payload
   }
