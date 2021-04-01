@@ -16,6 +16,12 @@ export const load: Load<Props> = async ({params}) => {
     },
   }
 }
+const loadComments = async (comments, item) => {
+  comments.value = await Promise.all(
+      item.kids.slice(0, 20).map(async id => loadItem(id))
+  )
+  commentsLoaded.value = true
+}
 export default {
   props: {
     item: {
@@ -26,13 +32,7 @@ export default {
   setup({item}) {
     const commentsLoaded = ref(false)
     const comments = ref<Item[]>([])
-    const loadComments = async () => {
-      comments.value = await Promise.all(
-          item.kids.slice(0, 20).map(async id => loadItem(id))
-      )
-      commentsLoaded.value = true
-    }
-    onMounted(loadComments)
+    onMounted(() => loadComments(comments, item))
     return {
       formatTime,
       comments,

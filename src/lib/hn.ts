@@ -13,16 +13,11 @@ export type Item = {
 }
 
 export const loadItem = async (id: number): Promise<Item> => {
-    const item = await fetch(`${HN_API}/item/${id}.json`).then((res) =>
-        res.json()
-    )
-    return item
+    return await fetch(`${HN_API}/item/${id}.json`)
+        .then((res) => res.json())
 }
 
-export const loadTopStoryIds = async () => {
-    const ids: number[] = await fetch(`${HN_API}/topstories.json`).then((res) =>
-        res.json()
-    )
-
-    return ids
+export const loadTopStoryIds = async (): Promise<number[]> => {
+    return await fetch(`${HN_API}/topstories.json`)
+        .then((res) => res.json())
 }
