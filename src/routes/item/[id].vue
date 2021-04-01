@@ -8,6 +8,7 @@ type Props = {
   item: Item
 }
 export const load: Load<Props> = async ({params}) => {
+
   const item = await loadItem(Number(params.id))
   return {
     props: {
@@ -27,7 +28,7 @@ export default {
     const comments = ref<Item[]>([])
     const loadComments = async () => {
       comments.value = await Promise.all(
-          item.kids.slice(0, 20).map(async (id) => loadItem(id))
+          item.kids.slice(0, 20).map(async id => loadItem(id))
       )
       commentsLoaded.value = true
     }
