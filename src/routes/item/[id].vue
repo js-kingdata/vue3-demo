@@ -16,7 +16,7 @@ export const load: Load<Props> = async ({params}) => {
     },
   }
 }
-const loadComments = async (comments, item) => {
+const loadComments = async (comments, item, commentsLoaded) => {
   comments.value = await Promise.all(
       item.kids.slice(0, 20).map(async id => loadItem(id))
   )
@@ -32,7 +32,7 @@ export default {
   setup({item}) {
     const commentsLoaded = ref(false)
     const comments = ref<Item[]>([])
-    onMounted(() => loadComments(comments, item))
+    onMounted(() => loadComments(comments, item, commentsLoaded))
     return {
       formatTime,
       comments,
@@ -61,27 +61,34 @@ export default {
 
     <div class="mt-5 bg-white">
       <div class="px-5 py-3 border-b">{{ item.descendants }} comments</div>
-      <div class="px-5 py-3 text-sm" v-if="!commentsLoaded">
-        Loading comments..
-      </div>
-      <div class="divide-y">
-        <div
-            v-for="comment in comments"
-            :key="comment.id"
-            class="p-5 text-gray-600"
-        >
-          <div class="mb-2">
-            <router-link
-                :to="`/user/${item.by}`"
-                class="underline font-medium text-gray-500"
+      <Suspense v-if="commentsLoaded">
+        <template #default>
+          <div class="divide-y">
+            <div
+                v-for="comment in comments"
+                :key="comment.id"
+                class="p-5 text-gray-600"
             >
-              {{ comment.by }}
-            </router-link>
-            <span class="ml-2 text-sm">{{ formatTime(comment.time) }}</span>
+              <div class="mb-2">
+                <router-link
+                    :to="`/user/${item.by}`"
+                    class="underline font-medium text-gray-500"
+                >
+                  {{ comment.by }}
+                </router-link>
+                <span class="ml-2 text-sm">{{ formatTime(comment.time) }}</span>
+              </div>
+              <div class="prose prose-sm max-w-full" v-html="comment.text"></div>
+            </div>
           </div>
-          <div class="prose prose-sm max-w-full" v-html="comment.text"></div>
-        </div>
-      </div>
+        </template>
+        <template #fallback>
+          <div class="px-5 py-3 text-sm">
+            Loading comments..
+          </div>
+        </template>
+      </Suspense>
+
     </div>
   </div>
 </template>
